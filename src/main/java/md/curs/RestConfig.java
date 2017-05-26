@@ -1,6 +1,6 @@
 package md.curs;
 
-import md.curs.rest.UserService;
+import md.curs.rest.RestUserService;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
  * Created by MG
  */
 @Component
-public class JerseyConfig extends ResourceConfig {
+public class RestConfig extends ResourceConfig {
 
-    public JerseyConfig() {
-        register(UserService.class);
+    public RestConfig() {
+        register(RestUserService.class);
     }
 }

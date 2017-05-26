@@ -19,12 +19,12 @@ import java.util.List;
 @Path("/user")
 @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-public class UserService {
+public class RestUserService {
 
     private final UserRepo userRepo;
 
     @Autowired
-    public UserService(UserRepo userRepo) {
+    public RestUserService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
 
