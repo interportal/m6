@@ -14,4 +14,6 @@ public interface UserRepo extends CrudRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.name like %:query% OR u.email like %:query%")
     List<User> find(@Param("query") String query);
+
+    User findByUsername(String username);
 }

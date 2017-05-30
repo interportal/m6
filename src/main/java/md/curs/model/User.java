@@ -1,8 +1,11 @@
 package md.curs.model;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by MG
@@ -14,16 +17,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String username;
+    private String password;
+
     private String name;
     private String email;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Authority> authorities;
+
     public User() {
     }
 
-    public User(String name, String email) {
+    public User(String username, String password, String name, String email) {
+        this.username = username;
+        this.password = password;
         this.name = name;
         this.email = email;
     }
@@ -31,6 +42,14 @@ public class User {
     @PrePersist
     public void prePersist() {
         this.createDate = new Date();
+        encodePassword();
+    }
+
+    @PreUpdate
+    public void encodePassword() {
+        if (password != null) {
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
+        }
     }
 
     public Long getId() {
@@ -39,6 +58,22 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
@@ -63,5 +98,13 @@ public class User {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
     }
 }

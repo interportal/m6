@@ -49,6 +49,7 @@ public class RestUserService {
     }
 
     @PUT
+    @Transactional
     @Path("{id: \\d+}")
     public User update(@PathParam("id") Long id, User user) {
         if (user.getId() == null) {
@@ -62,6 +63,7 @@ public class RestUserService {
     }
 
     @DELETE
+    @Transactional
     @Path("{id: \\d+}")
     public void delete(@PathParam("id") Long id) {
         userRepo.delete(id);

@@ -3,6 +3,8 @@ package md.curs.soap;
 import md.curs.model.User;
 import md.curs.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,12 +44,14 @@ public class SoapUserService {
     }
 
     @WebMethod
+    @PreAuthorize("hasAuthority('GLOBAL_ADMIN')")
     public User save(@WebParam(name = "user") User user) {
         return userRepo.save(user);
     }
 
     @Oneway
     @WebMethod
+    @PreAuthorize("hasAuthority('GLOBAL_ADMIN')")
     public void delete(@WebParam(name="id") Long id) {
         userRepo.delete(id);
     }
